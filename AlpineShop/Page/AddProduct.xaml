@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlpineShop.Page.AddProduct"
+             Title="AddProduct">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="NameEntry" Placeholder="Название товара" />
+            <Entry x:Name="CategoryEntry" Placeholder="Категория (например: Железо)" />
+            <Entry x:Name="PriceEntry" Placeholder="Цена (например: 4990)" Keyboard="Numeric" />
+
+            <!-- Превью фото -->
+            <Image x:Name="PreviewImage" HeightRequest="160"  Aspect="AspectFill" BackgroundColor="LightGray"/>
+
+            <Button Text="Выбрать фото" Clicked="OnPickPhotoClicked"/>
+
+            <Button Text="Сохранить" Clicked="OnSaveClicked" />
+            <Label x:Name="InfoLabel" TextColor="Red"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

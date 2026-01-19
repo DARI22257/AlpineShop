@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlpineShop.Page.Login"
+             Title="Login">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Label Text="Магазин для альпинизма" FontSize="24" HorizontalOptions="Center" />
+
+            <Entry x:Name="LoginEntry" Placeholder="Логин" />
+            <Entry x:Name="PasswordEntry" Placeholder="Пароль" IsPassword="True" />
+
+            <Button Text="Войти" Clicked="OnLoginClicked" />
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="Нет аккаунта?" VerticalOptions="Center"/>
+                <Button Text="Регистрация" Clicked="OnRegisterClicked"/>
+            </HorizontalStackLayout>
+
+            <Label x:Name="InfoLabel" TextColor="Red" />
+
+            <Frame Padding="12" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Подсказка для теста:" FontAttributes="Bold"/>
+                    <Label Text="Админ: admin / admin" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

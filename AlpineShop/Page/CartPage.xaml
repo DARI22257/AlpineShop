@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlpineShop.Page.CartPage"
+             Title="CartPage">
+    <VerticalStackLayout Padding="10" Spacing="10">
+
+        <Label x:Name="TotalLabel"
+               FontSize="16"
+               FontAttributes="Bold" />
+
+        <CollectionView x:Name="CartView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="6" Padding="8" CornerRadius="12" HasShadow="True">
+                        <Grid ColumnDefinitions="90,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10">
+
+                            <Image Grid.RowSpan="3" Source="{Binding ImageFile}" HeightRequest="80" WidthRequest="90" Aspect="AspectFill" BackgroundColor="LightGray"/>
+
+                            <Label Grid.Column="1" Text="{Binding ProductName}" FontAttributes="Bold"  LineBreakMode="TailTruncation"/>
+
+                            <Label Grid.Row="1" Grid.Column="1"  Text="{Binding Price, StringFormat='Цена: {0} ₽'}"  TextColor="Gray"/>
+
+                            <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="8">
+                                <Button Text="−" Clicked="OnMinusClicked" CommandParameter="{Binding .}" />
+                                <Label Text="{Binding Quantity}" VerticalOptions="Center" />
+                                <Button Text="+" Clicked="OnPlusClicked" CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                            <Button Grid.Column="2" Grid.RowSpan="3" Text="Удалить" Clicked="OnRemoveClicked" CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Оформить (очистить корзину)" Clicked="OnCheckoutClicked" />
+
+    </VerticalStackLayout>
+</ContentPage>

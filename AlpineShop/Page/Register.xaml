@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlpineShop.Page.Register"
+             Title="Register">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="LoginEntry" Placeholder="Придумайте логин" />
+            <Entry x:Name="PasswordEntry" Placeholder="Придумайте пароль" IsPassword="True" />
+            <Entry x:Name="Password2Entry" Placeholder="Повторите пароль" IsPassword="True" />
+
+            <Button Text="Создать аккаунт" Clicked="OnRegisterClicked" />
+            <Label x:Name="InfoLabel" TextColor="Red" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AlpineShop.Page.Catalog"
+             x:Name="CatalogPage"
+             Title="Catalog">
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="10">
+
+            <!-- Верхняя панель -->
+            <HorizontalStackLayout Spacing="10">
+
+                <Label x:Name="HelloLabel"
+                   FontSize="16"
+                   HorizontalOptions="StartAndExpand"/>
+
+                <Button Text="Корзина"
+                    Clicked="OnCartClicked"/>
+
+                <Button Text="Выйти"
+                    Clicked="OnLogoutClicked"/>
+
+            </HorizontalStackLayout>
+
+            <!-- Кнопка добавления товара (только админ) -->
+            <Button x:Name="AddButton" Text="Добавить товар" IsVisible="False" Clicked="OnAddClicked"/>
+
+            <!-- Сетка каталога -->
+            <CollectionView x:Name="ProductsView" ItemsLayout="VerticalGrid, 2"  Margin="5" SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame Margin="6"  Padding="8" CornerRadius="12"  HasShadow="True">
+
+                            <VerticalStackLayout Spacing="6">
+
+                                <Image Source="{Binding ImageFile}" HeightRequest="120" Aspect="AspectFill" BackgroundColor="LightGray"/>
+
+                                <Label Text="{Binding Name}"  FontAttributes="Bold"  FontSize="14"   LineBreakMode="TailTruncation"/>
+
+                                <Label Text="{Binding Category}" FontSize="12" TextColor="Gray"/>
+
+                                <Label Text="{Binding Price, StringFormat='Цена: {0} ₽'}" FontSize="13"  FontAttributes="Bold"/>
+
+                                <!-- Кнопки администратора -->
+                                <HorizontalStackLayout Spacing="8"bIsVisible="{Binding Source={x:Reference CatalogPage}, Path=IsAdmin}">
+
+                                    <Button Text="Редактировать" Padding="8,4" Clicked="OnEditClicked" CommandParameter="{Binding .}" />
+
+                                    <Button Text="Удалить"  Padding="8,4"  Clicked="OnDeleteClicked" CommandParameter="{Binding .}" />
+
+                                </HorizontalStackLayout>
+
+                                <!-- Кнопка пользователя -->
+                                <Button Text="В корзину" Clicked="OnAddToCartClicked"  CommandParameter="{Binding .}" />
+
+                            </VerticalStackLayout>
+
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
