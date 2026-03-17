@@ -1,14 +1,27 @@
 using AlpineShop.Models;
-using Microsoft.Extensions.Logging.Abstractions;
+using System.Linq;
 
 namespace AlpineShop.Page;
 
 public partial class Login : ContentPage
 {
-	public Login()
-	{
-		InitializeComponent();
-	}
+    private static bool _inited = false;
+
+    public Login()
+    {
+        InitializeComponent();
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (_inited) return;
+        _inited = true;
+
+        await DB.InitializeAsync();
+    }
+
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new Register());
@@ -19,13 +32,15 @@ public partial class Login : ContentPage
         InfoLabel.Text = "";
 
         var login = (LoginEntry.Text ?? "").Trim();
-        var pass = PasswordEntry.Text ?? "";
+        var pass = (PasswordEntry.Text ?? "").Trim();
 
         if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(pass))
         {
             InfoLabel.Text = "¬ведите логин и пароль.";
             return;
         }
+
+        await DB.InitializeAsync();
 
         var user = DB.Users.FirstOrDefault(u =>
             u.Login.Equals(login, StringComparison.OrdinalIgnoreCase) &&
@@ -37,10 +52,7 @@ public partial class Login : ContentPage
             return;
         }
 
-        // ѕереход в каталог, передаЄм роль
         await Navigation.PushAsync(new Catalog(user.IsAdmin, user.Login));
-
-        // чтобы нельз€ было кнопкой "назад" вернутьс€ на вход (опционально):
         Navigation.RemovePage(this);
     }
 }

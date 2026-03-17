@@ -1,5 +1,4 @@
-﻿
-using AlpineShop.Models;
+﻿using AlpineShop.Models;
 
 namespace AlpineShop.Page;
 
@@ -11,7 +10,6 @@ public partial class CartPage : ContentPage
     {
         InitializeComponent();
         _login = login;
-
         Refresh();
     }
 
@@ -55,6 +53,7 @@ public partial class CartPage : ContentPage
     private async void OnCheckoutClicked(object sender, EventArgs e)
     {
         var cart = DB.GetCart(_login);
+
         if (cart.Count == 0)
         {
             await DisplayAlert("Корзина", "Корзина пустая.", "OK");
@@ -63,6 +62,7 @@ public partial class CartPage : ContentPage
 
         await DB.ClearCartAsync(_login);
         Refresh();
-        await DisplayAlert("Заказ", "Заказ оформлен (для учебного проекта корзина очищена).", "OK");
+
+        await DisplayAlert("Заказ", "Заказ оформлен.", "OK");
     }
 }

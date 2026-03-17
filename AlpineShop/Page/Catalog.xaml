@@ -44,17 +44,17 @@
                                 <Label Text="{Binding Price, StringFormat='Цена: {0} ₽'}" FontSize="13"  FontAttributes="Bold"/>
 
                                 <!-- Кнопки администратора -->
-                                <HorizontalStackLayout Spacing="8"bIsVisible="{Binding Source={x:Reference CatalogPage}, Path=IsAdmin}">
+                                <HorizontalStackLayout Spacing="8" IsVisible="{Binding Source={x:Reference CatalogPage}, Path=IsAdmin}">
+
+                                    <Button x:Name="AddButton" Text="Добавить товар" IsVisible="{Binding Source={x:Reference CatalogPage}, Path=IsAdmin}" Clicked="OnAddClicked"/>
 
                                     <Button Text="Редактировать" Padding="8,4" Clicked="OnEditClicked" CommandParameter="{Binding .}" />
 
-                                    <Button Text="Удалить"  Padding="8,4"  Clicked="OnDeleteClicked" CommandParameter="{Binding .}" />
-
+                                    <Button Text="Удалить" Padding="8,4" Clicked="OnDeleteClicked" CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
 
                                 <!-- Кнопка пользователя -->
-                                <Button Text="В корзину" Clicked="OnAddToCartClicked"  CommandParameter="{Binding .}" />
-
+                                <Button Text="В корзину" IsVisible="{Binding Source={x:Reference CatalogPage}, Path=IsNotAdmin}" Clicked="OnAddToCartClicked" CommandParameter="{Binding .}" />
                             </VerticalStackLayout>
 
                         </Frame>

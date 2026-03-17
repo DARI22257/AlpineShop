@@ -11,38 +11,30 @@ public partial class AddProduct : ContentPage
     {
         InitializeComponent();
     }
-
     private async void OnPickPhotoClicked(object sender, EventArgs e)
     {
-        try
+        _imagePath = await PickImageAsync(PreviewImage);
+    }
+
+    private async Task<string> PickImageAsync(Image preview)
+    {
+        var result = await FilePicker.PickAsync(new PickOptions
         {
-            var result = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle = "Выберите фото товара",
-                FileTypes = FilePickerFileType.Images
-            });
+            FileTypes = FilePickerFileType.Images
+        });
 
-            if (result == null) return;
+        if (result == null)
+            return "";
 
-            var ext = Path.GetExtension(result.FileName);
-            if (string.IsNullOrWhiteSpace(ext)) ext = ".jpg";
+        var path = Path.Combine(FileSystem.AppDataDirectory, result.FileName);
 
-            var fileName = $"{Guid.NewGuid():N}{ext}";
-            var destPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+        using var src = await result.OpenReadAsync();
+        using var dst = File.Create(path);
+        await src.CopyToAsync(dst);
 
-            using var src = await result.OpenReadAsync();
-            using var dst = File.Create(destPath);
-            await src.CopyToAsync(dst);
+        preview.Source = ImageSource.FromFile(path);
 
-            _imagePath = destPath;
-
-            // Превью
-            PreviewImage.Source = ImageSource.FromFile(destPath);
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Ошибка", $"Не удалось выбрать фото: {ex.Message}", "OK");
-        }
+        return path;
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
